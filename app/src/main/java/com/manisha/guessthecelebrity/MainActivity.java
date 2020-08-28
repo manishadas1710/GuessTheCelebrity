@@ -141,11 +141,10 @@ public class MainActivity extends AppCompatActivity {
         String result = null;
 
         try {
-            result = task.execute("http://www.posh24.se/kandisar").get();
-            String[] splitResult = result.split("<div class=\"sidebarContainer\">");
-
-            Pattern p = Pattern.compile("<img src=\"(.*?)\"");
-            Matcher m = p.matcher(splitResult[0]);
+            result = task.execute("https://www.imdb.com/list/ls025929404/").get();
+            
+            Pattern p = Pattern.compile("src=\"(.*?).(jpg|_CB466677935_.png)\"");
+            Matcher m = p.matcher(result);
 
             while (m.find()) {
 
@@ -153,20 +152,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            p = Pattern.compile("alt=\"(.*?)\"");
-            m = p.matcher(splitResult[0]);
+            p = Pattern.compile("<img alt=\"(.*?)\"");
+            m = p.matcher(result);
 
             while (m.find()) {
 
                 celebNames .add(m.group(1));
 
             }
-
-
-            //<div class="sidebarContainer">
-
-            //Log.i("Contents of URL:", result);
-
         }
         catch (InterruptedException e) {
 
@@ -229,9 +222,5 @@ public class MainActivity extends AppCompatActivity {
 
             e.printStackTrace();
         }
-
-
-
-
     }
 }
